@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>بلاغات الصيانة</title>
-<meta name="description" content="بلاغات الصيانة — نظام بلاغات الصيانة غير الطبية وأوامر العمل والتقارير بمستشفى الحرم">
+<title>متقن لإدارة المشاريع - بلاغ</title>
+<meta name="description" content="متقن لإدارة المشاريع - بلاغ — بلاغات الصيانة غير الطبية وأوامر العمل والتقارير بمستشفى الحرم">
 <meta name="theme-color" content="#0F2A3F">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="بلاغات الصيانة">
-<meta name="application-name" content="بلاغات الصيانة">
+<meta name="apple-mobile-web-app-title" content="متقن بلاغ">
+<meta name="application-name" content="متقن بلاغ">
 <meta name="author" content="مدير إدارة المشاريع: م. أحمد بندر الردادي">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -24,11 +24,12 @@
 window.APP_CONFIG = {
   // رابط النشر حق «نظام بلاغات الصيانة غير الطبية» في Google Apps Script (ينتهي بـ /exec)
   GAS_URL: 'https://script.google.com/macros/s/AKfycby1MdzS_tjxvWeyA04skU7ahJ6-Lkfjfyuw5F-bvzEPQ92Lmz_XekNooorxA_436l6S3g/exec',
-  NAME: 'بلاغات الصيانة',
-  SUB: 'نظام بلاغات الصيانة غير الطبية — التشغيل والصيانة',
+  BRAND: 'متقن لإدارة المشاريع',
+  NAME: 'بلاغ',
+  SUB: 'بلاغات الصيانة غير الطبية — مستشفى الحرم',
   ORG: 'مستشفى الحرم',
   OWNER: 'مدير إدارة المشاريع: م. أحمد بندر الردادي',
-  VERSION: '1.0.0',
+  VERSION: '1.1.0',
   KEY: 'haramMaint',          // بادئة التخزين المحلي — كل تطبيق ببادئته (نفس النطاق github.io)
   PASS: ['page'],             // ?page=dashboard يفتح اللوحة التنفيذية مباشرة بعد الدخول
   LOAD_TIMEOUT_MS: 25000
@@ -98,13 +99,14 @@ body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiase
 
 <div class="splash" id="splash">
   <img src="icon-192.png" alt="">
-  <h1 id="spName">بلاغات الصيانة</h1>
+  <div id="spBrand" style="font-size:13px;opacity:.85;margin-bottom:-6px">متقن لإدارة المشاريع</div>
+  <h1 id="spName">بلاغ</h1>
   <p id="spSub"></p>
   <div class="spin"></div>
   <div class="copy" id="spCopy"></div>
 </div>
 
-<iframe id="frame" title="بلاغات الصيانة"
+<iframe id="frame" title="متقن لإدارة المشاريع - بلاغ"
   allow="camera; microphone; geolocation; clipboard-read; clipboard-write; fullscreen"
   referrerpolicy="no-referrer-when-downgrade"></iframe>
 
@@ -153,8 +155,10 @@ body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiase
   $('spName').textContent = C.NAME || '';
   $('spSub').textContent = C.SUB || '';
   $('spCopy').textContent = '© ' + year + ' جميع الحقوق الفكرية محفوظة — ' + (C.OWNER || '');
-  document.title = C.NAME || document.title;
-  frame.title = C.NAME || '';
+  var FULL = (C.BRAND ? C.BRAND + ' - ' : '') + (C.NAME || '');
+  if (C.BRAND) $('spBrand').textContent = C.BRAND;
+  document.title = FULL || document.title;
+  frame.title = FULL;
 
   function validUrl(u) { return /^https:\/\/script\.google\.com\/(a\/[^\/]+\/)?macros\/s\/[\w-]+\/exec/.test(String(u || '')); }
 
@@ -168,7 +172,7 @@ body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiase
     $('stTitle').textContent = s[1];
     $('stMsg').textContent = s[2];
     $('stRetry').classList.toggle('hidden', kind === 'config');
-    $('stFoot').textContent = (C.NAME || '') + ' · v' + (C.VERSION || '');
+    $('stFoot').textContent = FULL + ' · v' + (C.VERSION || '');
     $('state').classList.remove('hidden');
     splash.classList.add('out');
   }

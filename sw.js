@@ -4,7 +4,7 @@
  * عند أي تعديل على ملفات الغلاف: زِد رقم VERSION.
  */
 'use strict';
-var VERSION = 'haram-maintenance-v1.0.0';
+var VERSION = 'haram-maintenance-v1.1.0';
 var SHELL = [
   './',
   './index.html',
